@@ -1,4 +1,4 @@
-module github.com/takaya030/gostmnews
+module github.com/takaya030/gorss
 
 go 1.21.1
 
