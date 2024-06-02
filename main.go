@@ -11,11 +11,11 @@ import (
 
 func main() {
 	engine := gin.Default()
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Printf("Cannot load env file: %v", err)
+	}
 	engine.GET("/", func(c *gin.Context) {
-		err := godotenv.Load(".env")
-		if err != nil {
-			fmt.Printf("Cannot load env file: %v", err)
-		}
 
 		msg := os.Getenv("SAMPLE_MESSAGE")
 
