@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mmcdole/gofeed"
+	"github.com/takaya030/gorss/infrastructure/persistence"
 )
 
 func ShowHello(c *gin.Context) {
@@ -36,5 +37,28 @@ func ParseFeed(c *gin.Context) {
 		fmt.Println("\t->", item.Link)
 		fmt.Println("\t->", item.PublishedParsed.Format(time.RFC3339))
 		fmt.Println("\t->", item.PublishedParsed.Unix())
+	}
+}
+
+func FetchFeed(c *gin.Context) {
+	rss_url := os.Getenv("RSS_URL")
+	client, err := persistence.NewRssClient(rss_url)
+	if err != nil {
+		return
+	}
+
+	items, err := client.GetFeedItems()
+	if err != nil {
+		return
+	}
+
+	for _, item := range items {
+		if item == nil {
+			break
+		}
+		fmt.Println(item.Title)
+		fmt.Println("\t->", item.Id)
+		fmt.Println("\t->", item.Url)
+		fmt.Println("\t->", item.TimeStamp)
 	}
 }
