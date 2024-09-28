@@ -1,10 +1,9 @@
 package repository
 
-import "github.com/mmcdole/gofeed"
+import (
+	"github.com/takaya030/gorss/domain/model"
+)
 
 type RssRepository interface {
-	ParseURL(url string) error
-	GetTitle() (string, error)
-	GetRssType() (string, error)
-	GetFeedItems() ([]*gofeed.Item, error)
+	GetFeedItems() ([]*model.News, error)
 }
