@@ -42,11 +42,12 @@ func (r *rssClient) GetFeedItems() ([]*model.News, error) {
 		if item == nil {
 			break
 		}
-		n := new(model.News)
-		n.Title = item.Title
-		n.TimeStamp = item.PublishedParsed.Unix()
-		n.Url = item.Link
-		newsItems = append(newsItems, n)
+		n := model.News{
+			Title:     item.Title,
+			TimeStamp: item.PublishedParsed.Unix(),
+			Url:       item.Link,
+		}
+		newsItems = append(newsItems, &n)
 	}
 	return newsItems, nil
 }
